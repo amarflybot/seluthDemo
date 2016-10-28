@@ -67,6 +67,7 @@ public class TestController implements
         this.tracer.addTag("In testCall", "value of TestCall");
         controller.testMethod1();
         Thread.sleep(5000);
+        span.stop();
         this.tracer.close(span);
         return "in TestCall";
     }
