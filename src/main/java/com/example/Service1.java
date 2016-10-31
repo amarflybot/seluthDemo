@@ -1,8 +1,11 @@
 package com.example;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.sleuth.Tracer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.lang.invoke.MethodHandles;
 
 /**
  * Created by amarendra on 28/10/16.
@@ -10,12 +13,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class Service1 {
 
-    @Autowired
-    private Tracer tracer;
+    private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    @Async
     public void testMethod2() throws InterruptedException {
         Thread.sleep(2000);
-        this.tracer.addTag("in TestMethod2", "Value of TestMethod2");
+        log.info("in TestMethod2", "Value of TestMethod2");
         Thread.sleep(2000);
     }
 }
