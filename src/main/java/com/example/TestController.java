@@ -20,7 +20,7 @@ public class TestController implements
         ApplicationListener<EmbeddedServletContainerInitializedEvent> {
 
 
-    private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    //private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Autowired
     private RestTemplate restTemplate;
@@ -37,7 +37,7 @@ public class TestController implements
     @RequestMapping("/")
     public String hi() throws InterruptedException {
         Thread.sleep(this.random.nextInt(1000));
-        log.info("Home page");
+        //log.info("Home page");
         String s = this.restTemplate.getForObject("http://localhost:" + this.port
                 + "/hi2", String.class);
         return "hi/" + s;
@@ -51,7 +51,7 @@ public class TestController implements
                 int millis = TestController.this.random.nextInt(1000);
                 Thread.sleep(millis);
                 //TestController.this.tracer.addTag("callable-sleep-millis", String.valueOf(millis));
-                log.info("callable-sleep-millis", String.valueOf(millis));
+                //log.info("callable-sleep-millis", String.valueOf(millis));
                 //Span currentSpan = TestController.this.accessor.getCurrentSpan();
 
                 return "async hi: " ;
@@ -60,11 +60,12 @@ public class TestController implements
     }
 
     @RequestMapping("/testCall")
+    @Loggable
     public String testCall() throws InterruptedException {
         /*Span span = this.tracer.createSpan("http:testCall",
                 new AlwaysSampler());
         this.tracer.addTag("In testCall", "value of TestCall");*/
-        log.info("In testCall", "value of TestCall");
+        //log.info("In testCall", "value of TestCall");
         controller.testMethod1();
         Thread.sleep(5000);
         /*span.stop();
@@ -74,18 +75,18 @@ public class TestController implements
 
     @RequestMapping("/async")
     public String async() throws InterruptedException {
-        log.info("async");
+        //log.info("async");
         this.controller.background();
         return "ho";
     }
 
     @RequestMapping("/hi2")
     public String hi2() throws InterruptedException {
-        log.info("hi2");
+        //log.info("hi2");
         int millis = this.random.nextInt(1000);
         Thread.sleep(millis);
         //this.tracer.addTag("random-sleep-millis", String.valueOf(millis));
-        log.info("random-sleep-millis", String.valueOf(millis));
+        //log.info("random-sleep-millis", String.valueOf(millis));
         return "hi2";
     }
 
@@ -94,7 +95,7 @@ public class TestController implements
         /*Span span = this.tracer.createSpan("http:customTraceEndpoint",
                 new AlwaysSampler());*/
         int millis = this.random.nextInt(1000);
-        log.info(String.format("Sleeping for [%d] millis", millis));
+        //log.info(String.format("Sleeping for [%d] millis", millis));
         Thread.sleep(millis);
         //this.tracer.addTag("random-sleep-millis", String.valueOf(millis));
 
@@ -107,10 +108,10 @@ public class TestController implements
     @RequestMapping("/start")
     public String start() throws InterruptedException {
         int millis = this.random.nextInt(1000);
-        log.info(String.format("Sleeping for [%d] millis", millis));
+        //log.info(String.format("Sleeping for [%d] millis", millis));
         Thread.sleep(millis);
         //this.tracer.addTag("random-sleep-millis", String.valueOf(millis));
-        log.info("random-sleep-millis", String.valueOf(millis));
+        //log.info("random-sleep-millis", String.valueOf(millis));
 
         String s = this.restTemplate.getForObject("http://localhost:" + this.port
                 + "/call", String.class);

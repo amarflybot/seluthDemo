@@ -16,7 +16,7 @@ import java.lang.invoke.MethodHandles;
 @EnableAsync
 public class SeluthDemoApplication {
 
-	private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	//private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	public static void main(String[] args) {
 		SpringApplication.run(SeluthDemoApplication.class, args);
@@ -27,5 +27,7 @@ public class SeluthDemoApplication {
         return new RestTemplate();
     }
 
-
+    public LoggingAspect loggingAspect(){
+        return new LoggingAspect();
+    }
 }
